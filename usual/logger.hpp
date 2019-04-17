@@ -16,9 +16,11 @@ namespace usual {
     }
     inline void clog(){};
     template <typename T, typename... Args> inline void clog(T&& t, Args&& ...args) {
+        #ifndef NDEBUG
         std::cerr << t;
         clog(std::forward<Args>(args)...);
         std::cerr << std::endl;
+        #endif
     }
 }
 

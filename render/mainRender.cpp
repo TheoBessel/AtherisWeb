@@ -13,13 +13,12 @@ MainRender::MainRender() {
         appInit = true;
         auto my_main_window = std::make_unique<MainWindow>();
         try {
-            my_main_window->run(640, 360);
+            my_main_window->run();
         } catch (const std::exception& e) {
-            usual::clog(e.what());
-            usual::plog(EXIT_FAILURE);
+            usual::clog("[RENDER-ERROR] : ", e.what());
+            usual::clog("EXIT_FAILURE : ", EXIT_FAILURE);
         }
-
-         usual::plog(EXIT_SUCCESS);
+         usual::clog("EXIT_SUCCESS : ", EXIT_SUCCESS);
     }
-    usual::plog("App initialized : ", appInit);
+    usual::clog("App initialized : ", appInit);
 }

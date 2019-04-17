@@ -11,5 +11,5 @@ HtmlLexer::HtmlLexer() {
     if(lexingSuccess){
         lexerInit = true;
     }
-    usual::plog("Lexing achieved : ", lexerInit);
+    usual::clog("Lexing achieved : ", lexerInit);
 }
