@@ -6,10 +6,29 @@
 #define WEBRENDER_FILES_HPP
 
 #include <fstream>
+#include <iostream>
 #include <vector>
+#include <filesystem>
+
+namespace fs = std::filesystem;
 
 namespace usual {
-    static std::vector<char> readFile(const std::string& filename) {
+    static std::string readFile(fs::path path) {
+        std::ifstream ifile{ path };
+
+        if (!ifile.is_open()) {
+            throw std::runtime_error("Failed to open file !");
+        }
+
+        const auto fileSize = fs::file_size(path);
+
+        std::string result(fileSize, ' ');
+
+        ifile.read(result.data(), fileSize);
+        return result;
+    }
+
+    static std::vector<char> readFileToBuffer(const std::string &filename) {
         std::ifstream ifile(filename, std::ios::ate | std::ios::binary);
 
         if (!ifile.is_open()) {
@@ -25,15 +44,17 @@ namespace usual {
         ifile.close();
 
         return buffer;
-    }
+    };
 
-    static std::string writeFile(std::string& text, const std::string& filename) {
+    static void writeFile(const std::string& text, const std::string& filename) {
         std::ofstream ofile;
         ofile.open(filename, std::ios::out | std::ios::app | std::ios::binary);
         if (!ofile.is_open()) {
             throw std::runtime_error("Failed to create file !");
         }
-            ofile << text;
+        ofile << text;
+
+        ofile.close();
     }
 }
 

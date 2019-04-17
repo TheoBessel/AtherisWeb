@@ -4,6 +4,7 @@
 
 #include "htmlLexer.hpp"
 #include "../../usual/logger.hpp"
+#include "../../usual/files.hpp"
 
 HtmlLexer::HtmlLexer() {
     bool lexerInit = false;

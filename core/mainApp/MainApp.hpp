@@ -7,6 +7,7 @@
 
 
 #include <memory>
+#include <thread>
 #include "../../url/UrlGetter.hpp"
 
 class UrlGetter;
@@ -16,7 +17,6 @@ class MainApp {
 public:
     // Code
     MainApp();
-
 private:
     std::unique_ptr<UrlGetter> m_urlHandler;
     std::unique_ptr<HtmlLexer> m_HtmlLexer;

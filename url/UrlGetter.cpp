@@ -43,7 +43,6 @@ std::string UrlGetter::get(std::string url) {
     curl_easy_cleanup(curl);
     curl_global_cleanup();
     usual::clog("Url get success");
-    const std::string filepath = "/Users/theobessel/Desktop/test.html";
-    usual::writeFile(data, filepath);
+    usual::writeFile(data, "/Users/theobessel/Desktop/test.html");
     return data;
 }

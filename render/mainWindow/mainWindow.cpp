@@ -392,8 +392,10 @@ void MainWindow::createRenderPass() {
 // && glslangValidator -V vertex/baseShader.vert
 
 void MainWindow::createGraphicsPipeline() {
-    auto vertShaderCode = usual::readFile("/Users/theobessel/Desktop/WebRender/render/mainWindow/vertex/vert.spv");
-    auto fragShaderCode = usual::readFile("/Users/theobessel/Desktop/WebRender/render/mainWindow/fragment/frag.spv");
+    auto vertShaderCode = usual::readFileToBuffer(
+            "/Users/theobessel/Desktop/WebRender/render/mainWindow/vertex/vert.spv");
+    auto fragShaderCode = usual::readFileToBuffer(
+            "/Users/theobessel/Desktop/WebRender/render/mainWindow/fragment/frag.spv");
 
     VkShaderModule vertShaderModule = createShaderModule(vertShaderCode);
     VkShaderModule fragShaderModule = createShaderModule(fragShaderCode);
