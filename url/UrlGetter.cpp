@@ -36,11 +36,13 @@ std::string UrlGetter::get(std::string url) {
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &data);
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, &UrlGetter::debugCallback);
-    curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+    #ifndef NDEBUG
+        curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+    #endif
     curl_easy_perform(curl);
-    usual::clog(data);
     curl_easy_cleanup(curl);
     curl_global_cleanup();
+    usual::clog("Url get success");
     const std::string filepath = "/Users/theobessel/Desktop/test.html";
     usual::writeFile(data, filepath);
     return data;
