@@ -38,8 +38,14 @@ add_executable(
         render/mainWindow/mainWindow.cpp
         render/mainWindow/mainWindow.hpp
         usual/files.hpp
-        url/UrlGetter.cpp url/UrlGetter.hpp core/mainApp/MainApp.cpp core/mainApp/MainApp.hpp)
+        url/UrlGetter.cpp
+        url/UrlGetter.hpp
+        core/mainApp/MainApp.cpp
+        core/mainApp/MainApp.hpp
+)
 
 target_link_libraries(${PROJECT_NAME} $<$<PLATFORM_ID:Darwin>:c++fs> Vulkan::Vulkan curl glm glfw )
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_EXTENSIONS OFF)
+
+//ce que je veux faire c'est presque un moteur de jeu
