@@ -47,5 +47,3 @@ add_executable(
 target_link_libraries(${PROJECT_NAME} $<$<PLATFORM_ID:Darwin>:c++fs> Vulkan::Vulkan curl glm glfw )
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_EXTENSIONS OFF)
-
-//ce que je veux faire c'est presque un moteur de jeu
