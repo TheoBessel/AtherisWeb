@@ -22,7 +22,7 @@ VkResult CreateDebugUtilsMessengerEXT(
         const VkAllocationCallbacks* pAllocator,
         VkDebugUtilsMessengerEXT* pDebugMessenger
 ) {
-    auto func = (PFN_vkCreateDebugUtilsMessengerEXT) vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT");
+    auto func = reinterpret_cast<PFN_vkCreateDebugUtilsMessengerEXT>(vkGetInstanceProcAddr(instance, "vkCreateDebugUtilsMessengerEXT"));
     if (func != nullptr) {
         return func(instance, pCreateInfo, pAllocator, pDebugMessenger);
     } else {
@@ -102,7 +102,8 @@ void MainWindow::cleanupSwapChain() {
     for (size_t i = 0; i < swapChainImageViews.size(); i++) {
         vkDestroyImageView(device, swapChainImageViews[i], nullptr);
     }
-
+    usual::clog(device);
+    usual::clog(swapChain);
     vkDestroySwapchainKHR(device, swapChain, nullptr);
 }
 
@@ -406,10 +407,8 @@ void MainWindow::createRenderPass() {
 // && glslangValidator -V vertex/baseShader.vert
 
 void MainWindow::createGraphicsPipeline() {
-    auto vertShaderCode = usual::readFileToBuffer(
-            "/Users/theobessel/Desktop/WebRender/render/mainWindow/vertex/vert.spv");
-    auto fragShaderCode = usual::readFileToBuffer(
-            "/Users/theobessel/Desktop/WebRender/render/mainWindow/fragment/frag.spv");
+    auto vertShaderCode = usual::readFileToBuffer("/Users/theobessel/AtherisWeb/render/mainWindow/vertex/vert.spv");
+    auto fragShaderCode = usual::readFileToBuffer("/Users/theobessel/AtherisWeb/render/mainWindow/fragment/frag.spv");
 
     VkShaderModule vertShaderModule = createShaderModule(vertShaderCode);
     VkShaderModule fragShaderModule = createShaderModule(fragShaderCode);

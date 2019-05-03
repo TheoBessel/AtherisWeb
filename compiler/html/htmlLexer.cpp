@@ -15,7 +15,7 @@ HtmlLexer::HtmlLexer() {
         lexerInit = true;
     }
 
-    tokenize(getfile("/Users/theobessel/Desktop/test.html"));
+    //tokenize(getfile("/Users/theobessel/AtherisWeb/render/mainWindow/"));
 
     usual::clog("Lexing achieved : ", lexerInit);
 }
@@ -27,7 +27,7 @@ std::string HtmlLexer::getfile(fs::path path) {
 void HtmlLexer::tokenize(const std::string &file) {
 
 }
-
+/*
 enum TAGS {
     T_COMMENTARY,
     T_DOCTYPE,
@@ -35,6 +35,7 @@ enum TAGS {
     T_ABBR,
     T_ACRONYM,
     T_ADDRESS,
+
     T_APPLET,
     T_AREA,
     T_ARTICLE,
@@ -311,17 +312,18 @@ enum ATTRIBUTES {
     A_WIDTH,
     A_WRAP
 };
-
+*/
+/*
 std::regex const makeRegex(std::string tag) {
     std::regex const regex {"<" + tag + "[ \\t]*([a-zA-Z]*[ \\t]*=*[ \\t]*\\\"[ \\t]*.*[ \\t]*\\\"[ \\t]*)*>[ \\t]*.*[ \\t]*</" + tag + ">"};
     return regex;
 }
-
-std::regex const makeEmptyTagRegex(std::string balise) {
-    std::regex const regex {"<" + balise + "[ \\t]*([a-zA-Z]*[ \\t]*=*[ \\t]*\\\"[ \\t]*.*[ \\t]*\\\"[ \\t]*)*/*>"};
-    return regex;
-}
-
+*/
+//std::regex const makeEmptyTagRegex(std::string balise) {
+//    std::regex const regex {"<" + balise + "[ \\t]*([a-zA-Z]*[ \\t]*=*[ \\t]*\\\"[ \\t]*.*[ \\t]*\\\"[ \\t]*)*/*>"};
+//    return regex;
+//}
+/*
 std::unordered_map<const std::regex, const TAGS, const std::vector<ATTRIBUTES> > tags {
         {{"<!--"},{"-->"},{TAGS::T_COMMENTARY}},
         {{"<!DOCTYPE "},{">"},{TAGS::T_DOCTYPE}},
@@ -471,3 +473,4 @@ std::unordered_map<const std::regex, const TAGS, const std::vector<ATTRIBUTES> >
         {{makeEmptyTagRegex("wbr")},{TAGS::T_WBR},{{ATTRIBUTES::},{ATTRIBUTES::}}},
         {{makeRegex("xmp")},{TAGS::T_XMP},{{ATTRIBUTES::},{ATTRIBUTES::}}} /// obsolete
 };
+*/
