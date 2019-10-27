@@ -78,6 +78,9 @@ private:
     std::vector<VkFence> inFlightFences;
     size_t currentFrame = 0;
     bool framebufferResized = false;
+    VkBuffer vertexBuffer;
+    VkDeviceMemory vertexBufferMemory;
+
 
     void initWindow();
     static void framebufferResizeCallback(GLFWwindow* window, int width, int height);
@@ -98,6 +101,8 @@ private:
     void createGraphicsPipeline();
     void createFramebuffers();
     void createCommandPool();
+    void createVertexBuffer();
+    uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
     void createCommandBuffers();
     void drawFrame();
     void createSyncObjects();
