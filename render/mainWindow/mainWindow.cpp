@@ -50,9 +50,21 @@ struct Vertex {
 };
 
 const std::vector<Vertex> vertices = {
-        {{0.0f, -0.5f}, {1.0f, 1.0f, 1.0f}},
-        {{0.5f, 0.5f}, {1.0f, 1.0f, 1.0f}},
-        {{-0.5f, 0.5f}, {0.0f, 1.0f, 1.0f}}
+        {{0.0f, -0.8f}, {0.2f, 0.2f, 0.2f}},
+        {{0.76f, -0.24f}, {0.2f, 0.2f, 0.2f}},
+        {{0.0f, 0.0f}, {0.2f, 0.2f, 0.2f}},
+        {{0.0f, 0.0f}, {0.4f, 0.4f, 0.4f}},
+        {{0.48f, 0.66f}, {0.4f, 0.4f, 0.4f}},
+        {{0.76f, -0.24f}, {0.4f, 0.4f, 0.4f}},
+        {{0.48f, 0.66f}, {0.6f, 0.6f, 0.6f}},
+        {{-0.48f, 0.66f}, {0.6f, 0.6f, 0.6f}},
+        {{0.0f, 0.0f}, {0.6f, 0.6f, 0.6f}},
+        {{0.0f, 0.0f}, {0.8f, 0.8f, 0.8f}},
+        {{-0.76f, -0.24f}, {0.8f, 0.8f, 0.8f}},
+        {{-0.48f, 0.66f}, {0.8f, 0.8f, 0.8f}},
+        {{-0.76f, -0.24f}, {1.0f, 1.0f, 1.0f}},
+        {{0.0f, -0.8f}, {1.0f, 1.0f, 1.0f}},
+        {{0.0f, 0.0f}, {1.0f, 1.0f, 1.0f}},
 };
 
 VkResult CreateDebugUtilsMessengerEXT(
@@ -690,7 +702,7 @@ void MainWindow::createCommandBuffers() {
 
             vkCmdDraw(commandBuffers[i], static_cast<uint32_t>(vertices.size()), 1, 0, 0);
         vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
-        vkCmdDraw(commandBuffers[i], 3, 1, 0, 0);
+        vkCmdDraw(commandBuffers[i], vertices.size(), 1, 0, 0);
         vkCmdEndRenderPass(commandBuffers[i]);
 
         if (vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS) {

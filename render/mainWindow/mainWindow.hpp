@@ -12,7 +12,7 @@
 #include <optional>
 
 const int WIDTH = 640;
-const int HEIGHT = 360;
+const int HEIGHT = 640;
 const int MAX_FRAMES_IN_FLIGHT = 2;
 
 const std::vector<const char*> validationLayers = {
