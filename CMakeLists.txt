@@ -42,6 +42,7 @@ add_executable(
         url/UrlGetter.hpp
         core/mainApp/MainApp.cpp
         core/mainApp/MainApp.hpp
+        render/shapes/fontLoader.hpp
 )
 
 target_link_libraries(${PROJECT_NAME} $<$<PLATFORM_ID:Darwin>:c++fs> Vulkan::Vulkan curl glm glfw )
