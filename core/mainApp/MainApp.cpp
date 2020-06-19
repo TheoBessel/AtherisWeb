@@ -11,9 +11,9 @@
 #include <thread>
 
 MainApp::MainApp() {
-    m_urlHandler = std::make_unique<UrlGetter>();
-    m_HtmlLexer = std::make_unique<HtmlLexer>();
+    //m_urlHandler = std::make_unique<UrlGetter>();
+    //m_HtmlLexer = std::make_unique<HtmlLexer>();
     // Test
-    m_urlHandler->get("https://www.google.fr/search?q=moteur");
+    //m_urlHandler->get("https://www.google.fr/search?q=moteur");
     m_render = std::make_unique<MainRender>();
 }

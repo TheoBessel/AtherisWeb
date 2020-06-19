@@ -7,10 +7,11 @@
 #include "../../usual/logger.hpp"
 #include "../../usual/files.hpp"
 
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
 
 #include <GLFW/glfw3.h>
 #define GLFW_INCLUDE_VULKAN
+
 
 #include <glm/glm.hpp>
 
@@ -49,23 +50,179 @@ struct Vertex {
     }
 };
 
-const std::vector<Vertex> vertices = {
-        {{0.0f, -0.8f}, {0.2f, 0.2f, 0.2f}},
-        {{0.76f, -0.24f}, {0.2f, 0.2f, 0.2f}},
-        {{0.0f, 0.0f}, {0.2f, 0.2f, 0.2f}},
-        {{0.0f, 0.0f}, {0.4f, 0.4f, 0.4f}},
-        {{0.48f, 0.66f}, {0.4f, 0.4f, 0.4f}},
-        {{0.76f, -0.24f}, {0.4f, 0.4f, 0.4f}},
-        {{0.48f, 0.66f}, {0.6f, 0.6f, 0.6f}},
-        {{-0.48f, 0.66f}, {0.6f, 0.6f, 0.6f}},
-        {{0.0f, 0.0f}, {0.6f, 0.6f, 0.6f}},
-        {{0.0f, 0.0f}, {0.8f, 0.8f, 0.8f}},
-        {{-0.76f, -0.24f}, {0.8f, 0.8f, 0.8f}},
-        {{-0.48f, 0.66f}, {0.8f, 0.8f, 0.8f}},
-        {{-0.76f, -0.24f}, {1.0f, 1.0f, 1.0f}},
-        {{0.0f, -0.8f}, {1.0f, 1.0f, 1.0f}},
-        {{0.0f, 0.0f}, {1.0f, 1.0f, 1.0f}},
-};
+float f(float x) {
+    return sinf(4*x)/2;
+}
+
+glm::vec2 bezier(float x, glm::vec2 A, glm::vec2 B, glm::vec2 C, glm::vec2 D) {
+    return {pow((1-x),3)*A.x+3*x*pow((1-x),2)*C.x+3*pow(x,2)*(1-x)*D.x+pow(x,3)*B.x,
+    pow((1-x),3)*A.y+3*x*pow((1-x),2)*C.y+3*pow(x,2)*(1-x)*D.y+pow(x,3)*B.y};
+}
+
+glm::vec2 quadratic_bezier(float x, glm::vec2 A, glm::vec2 B, glm::vec2 C) {
+    return {pow((1-x),3)*A.x+3*x*pow((1-x),2)*C.x+3*pow(x,2)*(1-x)*B.x+pow(x,3)*B.x,
+            pow((1-x),3)*A.y+3*x*pow((1-x),2)*C.y+3*pow(x,2)*(1-x)*B.y+pow(x,3)*B.y};
+}
+
+void push_quadratic_bezier(std::vector<Vertex> &vertices, int precision, glm::vec2 A, glm::vec2 B, glm::vec2 C, glm::vec3 color) {
+    vertices.push_back({quadratic_bezier(0, A, B, C),color});
+    for (float i = 1; i <= precision-1; ++i) {
+        vertices.push_back({quadratic_bezier(i/precision, A, B, C),color});
+        vertices.push_back({quadratic_bezier(i/precision, A, B, C),color});
+    }
+    vertices.push_back({quadratic_bezier(1, A, B, C),color});
+}
+
+void push_bezier(std::vector<Vertex> &vertices, int precision, glm::vec2 A, glm::vec2 B, glm::vec2 C, glm::vec2 D, glm::vec3 color) {
+    vertices.push_back({bezier(0, A, B, C, D),color});
+    for (float i = 1; i <= precision-1; ++i) {
+        vertices.push_back({bezier(i/precision, A, B, C, D),color});
+        vertices.push_back({bezier(i/precision, A, B, C, D),color});
+    }
+    vertices.push_back({bezier(1, A, B, C, D),color});
+}
+
+std::vector<Vertex> getVertices(int precision, glm::vec3 color) {
+    std::vector<Vertex> outVertices;
+    outVertices.push_back({{0.358,-0.109},color});
+    outVertices.push_back({{0.370,-0.097},color});
+    push_quadratic_bezier(outVertices, precision,
+            {0.370,-0.097},
+            {0.271,-0.0175},
+            {0.326,-0.046},color
+            );
+    push_quadratic_bezier(outVertices, precision,
+            {0.271,-0.0175},
+            {0.163,0.011},
+            {0.216,0.011},color
+    );
+    push_quadratic_bezier(outVertices, precision,
+            {0.163,0.011},
+            {0.0675,-0.027},
+            {0.104,0.011},color
+    );
+    push_quadratic_bezier(outVertices, precision,
+            {0.0675,-0.027},
+            {0.031,-0.126},
+            {0.031,-0.065},color
+    );
+    push_quadratic_bezier(outVertices, precision,
+            {0.031,-0.126},
+            {0.076,-0.273},
+            {0.031,-0.199},color
+    );
+    push_quadratic_bezier(outVertices, precision,
+            {0.076,-0.273},
+            {0.1915,-0.394},
+            {0.121,-0.347},color
+    );
+    push_quadratic_bezier(outVertices, precision,
+            {0.1915,-0.394},
+            {0.332,-0.441},
+            {0.262,-0.441},color
+    );
+    push_quadratic_bezier(outVertices, precision,
+            {0.332,-0.441},
+            {0.3905,-0.423},
+            {0.369,-0.441},color
+    );
+    push_quadratic_bezier(outVertices, precision,
+            {0.3905,-0.423},
+            {0.412,-0.373},
+            {0.412,-0.405},color
+    );
+    push_quadratic_bezier(outVertices, precision,
+            {0.412,-0.373},
+            {0.340,-0.257},
+            {0.412,-0.308},color
+    );
+    push_quadratic_bezier(outVertices, precision,
+            {0.340,-0.257},
+            {0.156,-0.190},
+            {0.268,-0.206},color
+    );
+    outVertices.push_back({{0.156,-0.190},color});
+    outVertices.push_back({{0.125,-0.186},color});
+    push_quadratic_bezier(outVertices, precision,
+            {0.125,-0.186},
+            {0.118,-0.124},
+            {0.118,-0.146},color
+    );
+    push_quadratic_bezier(outVertices, precision,
+            {0.118,-0.124},
+            {0.1435,-0.0585},
+            {0.118,-0.083},color
+    );
+    push_quadratic_bezier(outVertices, precision,
+            {0.1435,-0.0585},
+            {0.212,-0.034},
+            {0.169,-0.034},color
+    );
+    push_quadratic_bezier(outVertices, precision,
+            {0.212,-0.034},
+            {0.274,-0.0495},
+            {0.244,-0.034},color
+    );
+    push_quadratic_bezier(outVertices, precision,
+            {0.274,-0.0495},
+            {0.358,-0.109},
+            {0.304,-0.065},color
+    );
+    outVertices.push_back({{0.135,-0.208},color});
+    outVertices.push_back({{0.135,-0.208},color});
+    push_quadratic_bezier(outVertices, precision,
+            {0.135,-0.208},
+            {0.2295,-0.240},
+            {0.189,-0.221},color
+    );
+    push_quadratic_bezier(outVertices, precision,
+            {0.2295,-0.240},
+            {0.2915,-0.277},
+            {0.270,-0.259},color
+    );
+    push_quadratic_bezier(outVertices, precision,
+            {0.2915,-0.277},
+            {0.326,-0.316},
+            {0.313,-0.295},color
+    );
+    push_quadratic_bezier(outVertices, precision,
+            {0.326,-0.316},
+            {0.3425,-0.351},
+            {0.339,-0.337},color
+    );
+    push_quadratic_bezier(outVertices, precision,
+            {0.3425,-0.351},
+            {0.346,-0.379},
+            {0.346,-0.365},color
+    );
+    push_quadratic_bezier(outVertices, precision,
+            {0.346,-0.379},
+            {0.3365,-0.407},
+            {0.346,-0.396},color
+    );
+    push_quadratic_bezier(outVertices, precision,
+            {0.3365,-0.407},
+            {0.311,-0.418},
+            {0.327,-0.418},color
+    );
+    push_quadratic_bezier(outVertices, precision,
+            {0.311,-0.418},
+            {0.225,-0.3685},
+            {0.273,-0.418},color
+    );
+    push_quadratic_bezier(outVertices, precision,
+            {0.225,-0.3685},
+            {0.152,-0.252},
+            {0.177,-0.319},color
+    );
+
+    outVertices.push_back({{0.152,-0.252},color});
+    outVertices.push_back({{0.135,-0.208},color});
+
+    return outVertices;
+}
+
+std::vector<Vertex> vertices = getVertices(100,{0.53333333f,0.54117647f,0.55294118f});
 
 VkResult CreateDebugUtilsMessengerEXT(
         VkInstance instance,
@@ -116,11 +273,14 @@ void MainWindow::framebufferResizeCallback(GLFWwindow* window, int width, int he
 }
 
 void MainWindow::initVulkan() {
+    float time;
+    clock_t t1, t2;
     createInstance();
     setupDebugMessenger();
     createSurface();
     pickPhysicalDevice();
     createLogicalDevice();
+    t1 = clock();
     createSwapChain();
     createImageViews();
     createRenderPass();
@@ -130,6 +290,10 @@ void MainWindow::initVulkan() {
     createVertexBuffer();
     createCommandBuffers();
     createSyncObjects();
+    t2 = clock();
+    time = (float)(t2-t1)/CLOCKS_PER_SEC;
+
+    usual::clog("Time : ", time);
 }
 
 void MainWindow::mainLoop() {
@@ -308,8 +472,20 @@ void MainWindow::createLogicalDevice() {
         queueCreateInfos.push_back(queueCreateInfo);
     }
 
+    //vkGetPhysicalDeviceFeatures(physicalDevice, &deviceFeatures);
     VkPhysicalDeviceFeatures deviceFeatures = {};
+
+    VkPhysicalDeviceFeatures available;
+    vkGetPhysicalDeviceFeatures(physicalDevice, &available);
+
+    if (available.wideLines == VK_TRUE)
+        deviceFeatures.wideLines = VK_TRUE;
+
+    if (available.largePoints == VK_TRUE)
+        deviceFeatures.largePoints = VK_TRUE;
+
     VkDeviceCreateInfo createInfo = {};
+
     createInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
     createInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfos.size());
     createInfo.pQueueCreateInfos = queueCreateInfos.data();
@@ -495,7 +671,7 @@ void MainWindow::createGraphicsPipeline() {
 
     VkPipelineInputAssemblyStateCreateInfo inputAssembly = {};
     inputAssembly.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
-    inputAssembly.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP; //VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST
+    inputAssembly.topology = VK_PRIMITIVE_TOPOLOGY_LINE_LIST;//VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP; //VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST
     inputAssembly.primitiveRestartEnable = VK_FALSE;
 
     VkViewport viewport = {};
@@ -620,7 +796,7 @@ void MainWindow::createCommandPool() {
 void MainWindow::createVertexBuffer() {
     VkBufferCreateInfo bufferInfo = {};
     bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-    bufferInfo.size = sizeof(vertices[0]) * vertices.size();
+    bufferInfo.size = (sizeof(vertices[0])) * (vertices.size());
     bufferInfo.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
     bufferInfo.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
 
@@ -689,7 +865,7 @@ void MainWindow::createCommandBuffers() {
         renderPassInfo.renderArea.offset = {0, 0};
         renderPassInfo.renderArea.extent = swapChainExtent;
 
-        VkClearValue clearColor = {0.0f, 0.0f, 0.0f, 1.0f};
+        VkClearValue clearColor = {0.21176471f, 0.22352941f, 0.24313725f, 1.0f};
         renderPassInfo.clearValueCount = 1;
         renderPassInfo.pClearValues = &clearColor;
 
@@ -701,8 +877,10 @@ void MainWindow::createCommandBuffers() {
             vkCmdBindVertexBuffers(commandBuffers[i], 0, 1, vertexBuffers, offsets);
 
             vkCmdDraw(commandBuffers[i], static_cast<uint32_t>(vertices.size()), 1, 0, 0);
+            //vkCmdDraw(commandBuffers[i], static_cast<uint32_t>(vertices2.size()), 1, 0, 0);
         vkCmdBindPipeline(commandBuffers[i], VK_PIPELINE_BIND_POINT_GRAPHICS, graphicsPipeline);
         vkCmdDraw(commandBuffers[i], vertices.size(), 1, 0, 0);
+        //vkCmdDraw(commandBuffers[i], vertices2.size(), 1, 0, 0);
         vkCmdEndRenderPass(commandBuffers[i]);
 
         if (vkEndCommandBuffer(commandBuffers[i]) != VK_SUCCESS) {
@@ -908,7 +1086,6 @@ std::vector<const char*> MainWindow::getRequiredExtensions() {
     uint32_t glfwExtensionCount = 0;
     const char** glfwExtensions;
     glfwExtensions = glfwGetRequiredInstanceExtensions(&glfwExtensionCount);
-
     std::vector<const char*> extensions(glfwExtensions, glfwExtensions + glfwExtensionCount);
 
     if (enableValidationLayers) {

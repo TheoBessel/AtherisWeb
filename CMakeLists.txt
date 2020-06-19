@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.13)
+cmake_minimum_required(VERSION 3.15.3)
 set(PROJECT_NAME "WebRender")
 set(CMAKE_CXX_STANDARD 17)
 project(${PROJECT_NAME})
@@ -16,9 +16,10 @@ find_package(curl)
 # Compiler -----------------------------------------------
 
 # Render -------------------------------------------------
-find_package(GLFW3 3.3 REQUIRED)
+find_package(glfw3 3.4 REQUIRED)
 find_package(vulkan REQUIRED)
 find_package(glm REQUIRED)
+find_package(Freetype REQUIRED)
 
 if (GLFW_FOUND)
     message(STATUS "Packages: GLFW found")
@@ -42,9 +43,10 @@ add_executable(
         url/UrlGetter.hpp
         core/mainApp/MainApp.cpp
         core/mainApp/MainApp.hpp
-)
-
-target_link_libraries(${PROJECT_NAME} $<$<PLATFORM_ID:Darwin>:c++fs> Vulkan::Vulkan curl glm glfw )
+        render/shapes/fontLoader.hpp)
+#$<$<PLATFORM_ID:Darwin>:c++fs>
+target_link_libraries(${PROJECT_NAME}  Vulkan::Vulkan curl glm glfw ${FREETYPE_LIBRARIES})
+target_include_directories(${PROJECT_NAME} PRIVATE ${FREETYPE_INCLUDE_DIRS})
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_EXTENSIONS OFF)
 set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")

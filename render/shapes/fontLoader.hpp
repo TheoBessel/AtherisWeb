@@ -1,0 +1,8 @@
+//
+// Created by Theo Bessel on 18/06/2020.
+//
+
+#ifndef WEBRENDER_FONTLOADER_HPP
+#define WEBRENDER_FONTLOADER_HPP
+
+#endif //WEBRENDER_FONTLOADER_HPP

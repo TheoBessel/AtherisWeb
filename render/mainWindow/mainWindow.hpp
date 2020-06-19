@@ -5,18 +5,22 @@
 #ifndef WEBRENDER_MAINWINDOW_HPP
 #define WEBRENDER_MAINWINDOW_HPP
 
-#include <vulkan/vulkan.h>
+#include <vulkan/vulkan.hpp>
+
 #include <GLFW/glfw3.h>
+
+#define GLFW_INCLUDE_VULKAN
+
 
 #include <vector>
 #include <optional>
 
-const int WIDTH = 640;
-const int HEIGHT = 640;
+const int WIDTH = 780;
+const int HEIGHT = 780;
 const int MAX_FRAMES_IN_FLIGHT = 2;
 
 const std::vector<const char*> validationLayers = {
-    "VK_LAYER_LUNARG_standard_validation"
+    "VK_LAYER_KHRONOS_validation"
 };
 
 const std::vector<const char*> deviceExtensions = {
@@ -80,7 +84,6 @@ private:
     bool framebufferResized = false;
     VkBuffer vertexBuffer;
     VkDeviceMemory vertexBufferMemory;
-
 
     void initWindow();
     static void framebufferResizeCallback(GLFWwindow* window, int width, int height);
