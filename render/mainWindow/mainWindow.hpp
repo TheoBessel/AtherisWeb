@@ -11,7 +11,6 @@
 
 #define GLFW_INCLUDE_VULKAN
 
-
 #include <vector>
 #include <optional>
 
@@ -126,6 +125,5 @@ private:
             void* pUserData
             );
 };
-
 
 #endif //WEBRENDER_MAINWINDOW_HPP

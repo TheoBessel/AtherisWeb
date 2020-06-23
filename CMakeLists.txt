@@ -45,7 +45,7 @@ add_executable(
         render/shapes/fontLoader.hpp
 )
 
-target_link_libraries(${PROJECT_NAME} $<$<PLATFORM_ID:Darwin>:c++fs> Vulkan::Vulkan curl glm glfw )
+target_link_libraries(${PROJECT_NAME} Vulkan::Vulkan curl glm glfw )
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_EXTENSIONS OFF)
 set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -fno-omit-frame-pointer -fsanitize=address")

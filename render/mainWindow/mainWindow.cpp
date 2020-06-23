@@ -65,18 +65,22 @@ glm::vec2 quadratic_bezier(float x, glm::vec2 A, glm::vec2 B, glm::vec2 C) {
 }
 
 void push_quadratic_bezier(std::vector<Vertex> &vertices, int precision, glm::vec2 A, glm::vec2 B, glm::vec2 C, glm::vec3 color) {
+    vertices.push_back({{0,-0.35},color});
     vertices.push_back({quadratic_bezier(0, A, B, C),color});
     for (float i = 1; i <= precision-1; ++i) {
         vertices.push_back({quadratic_bezier(i/precision, A, B, C),color});
+        vertices.push_back({{0,-0.35},color});
         vertices.push_back({quadratic_bezier(i/precision, A, B, C),color});
     }
     vertices.push_back({quadratic_bezier(1, A, B, C),color});
 }
 
 void push_bezier(std::vector<Vertex> &vertices, int precision, glm::vec2 A, glm::vec2 B, glm::vec2 C, glm::vec2 D, glm::vec3 color) {
+    vertices.push_back({{0,-0.35},color});
     vertices.push_back({bezier(0, A, B, C, D),color});
     for (float i = 1; i <= precision-1; ++i) {
         vertices.push_back({bezier(i/precision, A, B, C, D),color});
+        vertices.push_back({{0,-0.35},color});
         vertices.push_back({bezier(i/precision, A, B, C, D),color});
     }
     vertices.push_back({bezier(1, A, B, C, D),color});
@@ -84,145 +88,54 @@ void push_bezier(std::vector<Vertex> &vertices, int precision, glm::vec2 A, glm:
 
 std::vector<Vertex> getVertices(int precision, glm::vec3 color) {
     std::vector<Vertex> outVertices;
+    outVertices.push_back({{0,-0.35},color});
     outVertices.push_back({{0.358,-0.109},color});
     outVertices.push_back({{0.370,-0.097},color});
-    push_quadratic_bezier(outVertices, precision,
-            {0.370,-0.097},
-            {0.271,-0.0175},
-            {0.326,-0.046},color
-            );
-    push_quadratic_bezier(outVertices, precision,
-            {0.271,-0.0175},
-            {0.163,0.011},
-            {0.216,0.011},color
-    );
-    push_quadratic_bezier(outVertices, precision,
-            {0.163,0.011},
-            {0.0675,-0.027},
-            {0.104,0.011},color
-    );
-    push_quadratic_bezier(outVertices, precision,
-            {0.0675,-0.027},
-            {0.031,-0.126},
-            {0.031,-0.065},color
-    );
-    push_quadratic_bezier(outVertices, precision,
-            {0.031,-0.126},
-            {0.076,-0.273},
-            {0.031,-0.199},color
-    );
-    push_quadratic_bezier(outVertices, precision,
-            {0.076,-0.273},
-            {0.1915,-0.394},
-            {0.121,-0.347},color
-    );
-    push_quadratic_bezier(outVertices, precision,
-            {0.1915,-0.394},
-            {0.332,-0.441},
-            {0.262,-0.441},color
-    );
-    push_quadratic_bezier(outVertices, precision,
-            {0.332,-0.441},
-            {0.3905,-0.423},
-            {0.369,-0.441},color
-    );
-    push_quadratic_bezier(outVertices, precision,
-            {0.3905,-0.423},
-            {0.412,-0.373},
-            {0.412,-0.405},color
-    );
-    push_quadratic_bezier(outVertices, precision,
-            {0.412,-0.373},
-            {0.340,-0.257},
-            {0.412,-0.308},color
-    );
-    push_quadratic_bezier(outVertices, precision,
-            {0.340,-0.257},
-            {0.156,-0.190},
-            {0.268,-0.206},color
-    );
+    push_quadratic_bezier(outVertices, precision,{0.370,-0.097},{0.271,-0.0175},{0.326,-0.046},color);
+    push_quadratic_bezier(outVertices, precision,{0.271,-0.0175},{0.163,0.011},{0.216,0.011},color);
+    push_quadratic_bezier(outVertices, precision,{0.163,0.011},{0.0675,-0.027},{0.104,0.011},color);
+    push_quadratic_bezier(outVertices, precision,{0.0675,-0.027},{0.031,-0.126},{0.031,-0.065},color);
+    push_quadratic_bezier(outVertices, precision,{0.031,-0.126},{0.076,-0.273},{0.031,-0.199},color);
+    push_quadratic_bezier(outVertices, precision,{0.076,-0.273},{0.1915,-0.394},{0.121,-0.347},color);
+    push_quadratic_bezier(outVertices, precision,{0.1915,-0.394},{0.332,-0.441},{0.262,-0.441},color);
+    push_quadratic_bezier(outVertices, precision,{0.332,-0.441},{0.3905,-0.423},{0.369,-0.441},color);
+    push_quadratic_bezier(outVertices, precision,{0.3905,-0.423},{0.412,-0.373},{0.412,-0.405},color);
+    push_quadratic_bezier(outVertices, precision,{0.412,-0.373},{0.340,-0.257},{0.412,-0.308},color);
+    push_quadratic_bezier(outVertices, precision,{0.340,-0.257},{0.156,-0.190},{0.268,-0.206},color);
+    outVertices.push_back({{0,-0.35},color});
     outVertices.push_back({{0.156,-0.190},color});
     outVertices.push_back({{0.125,-0.186},color});
-    push_quadratic_bezier(outVertices, precision,
-            {0.125,-0.186},
-            {0.118,-0.124},
-            {0.118,-0.146},color
-    );
-    push_quadratic_bezier(outVertices, precision,
-            {0.118,-0.124},
-            {0.1435,-0.0585},
-            {0.118,-0.083},color
-    );
-    push_quadratic_bezier(outVertices, precision,
-            {0.1435,-0.0585},
-            {0.212,-0.034},
-            {0.169,-0.034},color
-    );
-    push_quadratic_bezier(outVertices, precision,
-            {0.212,-0.034},
-            {0.274,-0.0495},
-            {0.244,-0.034},color
-    );
-    push_quadratic_bezier(outVertices, precision,
-            {0.274,-0.0495},
-            {0.358,-0.109},
-            {0.304,-0.065},color
-    );
+    push_quadratic_bezier(outVertices, precision,{0.125,-0.186},{0.118,-0.124},{0.118,-0.146},color);
+    push_quadratic_bezier(outVertices, precision,{0.118,-0.124},{0.1435,-0.0585},{0.118,-0.083},color);
+    push_quadratic_bezier(outVertices, precision,{0.1435,-0.0585},{0.212,-0.034},{0.169,-0.034},color);
+    push_quadratic_bezier(outVertices, precision,{0.212,-0.034},{0.274,-0.0495},{0.244,-0.034},color);
+    push_quadratic_bezier(outVertices, precision,{0.274,-0.0495},{0.358,-0.109},{0.304,-0.065},color);
+    outVertices.push_back({{0,-0.35},color});
     outVertices.push_back({{0.135,-0.208},color});
     outVertices.push_back({{0.135,-0.208},color});
-    push_quadratic_bezier(outVertices, precision,
-            {0.135,-0.208},
-            {0.2295,-0.240},
-            {0.189,-0.221},color
-    );
-    push_quadratic_bezier(outVertices, precision,
-            {0.2295,-0.240},
-            {0.2915,-0.277},
-            {0.270,-0.259},color
-    );
-    push_quadratic_bezier(outVertices, precision,
-            {0.2915,-0.277},
-            {0.326,-0.316},
-            {0.313,-0.295},color
-    );
-    push_quadratic_bezier(outVertices, precision,
-            {0.326,-0.316},
-            {0.3425,-0.351},
-            {0.339,-0.337},color
-    );
-    push_quadratic_bezier(outVertices, precision,
-            {0.3425,-0.351},
-            {0.346,-0.379},
-            {0.346,-0.365},color
-    );
-    push_quadratic_bezier(outVertices, precision,
-            {0.346,-0.379},
-            {0.3365,-0.407},
-            {0.346,-0.396},color
-    );
-    push_quadratic_bezier(outVertices, precision,
-            {0.3365,-0.407},
-            {0.311,-0.418},
-            {0.327,-0.418},color
-    );
-    push_quadratic_bezier(outVertices, precision,
-            {0.311,-0.418},
-            {0.225,-0.3685},
-            {0.273,-0.418},color
-    );
-    push_quadratic_bezier(outVertices, precision,
-            {0.225,-0.3685},
-            {0.152,-0.252},
-            {0.177,-0.319},color
-    );
-
+    push_quadratic_bezier(outVertices, precision,{0.135,-0.208},{0.2295,-0.240},{0.189,-0.221},color);
+    push_quadratic_bezier(outVertices, precision,{0.2295,-0.240},{0.2915,-0.277},{0.270,-0.259},color);
+    push_quadratic_bezier(outVertices, precision,{0.2915,-0.277},{0.326,-0.316},{0.313,-0.295},color);
+    push_quadratic_bezier(outVertices, precision,{0.326,-0.316},{0.3425,-0.351},{0.339,-0.337},color);
+    push_quadratic_bezier(outVertices, precision,{0.3425,-0.351},{0.346,-0.379},{0.346,-0.365},color);
+    push_quadratic_bezier(outVertices, precision,{0.346,-0.379},{0.3365,-0.407},{0.346,-0.396},color);
+    push_quadratic_bezier(outVertices, precision,{0.3365,-0.407},{0.311,-0.418},{0.327,-0.418},color);
+    push_quadratic_bezier(outVertices, precision,{0.311,-0.418},{0.225,-0.3685},{0.273,-0.418},color);
+    push_quadratic_bezier(outVertices, precision,{0.225,-0.3685},{0.152,-0.252},{0.177,-0.319},color);
+    outVertices.push_back({{0,-0.35},color});
     outVertices.push_back({{0.152,-0.252},color});
     outVertices.push_back({{0.135,-0.208},color});
-
     return outVertices;
 }
 
-std::vector<Vertex> vertices = getVertices(100,{0.53333333f,0.54117647f,0.55294118f});
+std::vector<Vertex> vertices = getVertices(10,{0.53333333f,0.54117647f,0.55294118f});
+
+/*const std::vector<Vertex> vertices = {
+        {{0.0f, -0.5f}, {1.0f, 0.0f, 0.0f}},
+        {{0.5f, 0.5f}, {0.0f, 1.0f, 0.0f}},
+        {{-0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}},
+};*/
+
 
 VkResult CreateDebugUtilsMessengerEXT(
         VkInstance instance,
@@ -273,14 +186,12 @@ void MainWindow::framebufferResizeCallback(GLFWwindow* window, int width, int he
 }
 
 void MainWindow::initVulkan() {
-    float time;
-    clock_t t1, t2;
     createInstance();
     setupDebugMessenger();
     createSurface();
     pickPhysicalDevice();
     createLogicalDevice();
-    t1 = clock();
+    auto t1 = clock();
     createSwapChain();
     createImageViews();
     createRenderPass();
@@ -290,8 +201,8 @@ void MainWindow::initVulkan() {
     createVertexBuffer();
     createCommandBuffers();
     createSyncObjects();
-    t2 = clock();
-    time = (float)(t2-t1)/CLOCKS_PER_SEC;
+    auto t2 = clock();
+    auto time = (float)(t2-t1)/CLOCKS_PER_SEC;
 
     usual::clog("Time : ", time);
 }
@@ -472,7 +383,6 @@ void MainWindow::createLogicalDevice() {
         queueCreateInfos.push_back(queueCreateInfo);
     }
 
-    //vkGetPhysicalDeviceFeatures(physicalDevice, &deviceFeatures);
     VkPhysicalDeviceFeatures deviceFeatures = {};
 
     VkPhysicalDeviceFeatures available;
@@ -671,7 +581,7 @@ void MainWindow::createGraphicsPipeline() {
 
     VkPipelineInputAssemblyStateCreateInfo inputAssembly = {};
     inputAssembly.sType = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
-    inputAssembly.topology = VK_PRIMITIVE_TOPOLOGY_LINE_LIST;//VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP; //VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST
+    inputAssembly.topology = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP;//VK_PRIMITIVE_TOPOLOGY_LINE_LIST; //VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST
     inputAssembly.primitiveRestartEnable = VK_FALSE;
 
     VkViewport viewport = {};
@@ -697,10 +607,10 @@ void MainWindow::createGraphicsPipeline() {
     rasterizer.sType = VK_STRUCTURE_TYPE_PIPELINE_RASTERIZATION_STATE_CREATE_INFO;
     rasterizer.depthClampEnable = VK_FALSE;
     rasterizer.rasterizerDiscardEnable = VK_FALSE;
-    rasterizer.polygonMode = VK_POLYGON_MODE_FILL;
+    rasterizer.polygonMode = VK_POLYGON_MODE_LINE; //VK_POLYGON_MODE_FILL
     rasterizer.lineWidth = 1.0f;
-    rasterizer.cullMode = VK_CULL_MODE_BACK_BIT;
-    rasterizer.frontFace = VK_FRONT_FACE_CLOCKWISE;
+    rasterizer.cullMode = VK_CULL_MODE_FRONT_BIT;//VK_CULL_MODE_BACK_BIT
+    rasterizer.frontFace = VK_FRONT_FACE_COUNTER_CLOCKWISE;//VK_FRONT_FACE_CLOCKWISE
     rasterizer.depthBiasEnable = VK_FALSE;
 
     VkPipelineMultisampleStateCreateInfo multisampling = {};
