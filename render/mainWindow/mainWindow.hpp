@@ -6,16 +6,13 @@
 #define WEBRENDER_MAINWINDOW_HPP
 
 #include <vulkan/vulkan.hpp>
-
 #include <GLFW/glfw3.h>
-
 #define GLFW_INCLUDE_VULKAN
-
 #include <vector>
 #include <optional>
 
-const int WIDTH = 780;
-const int HEIGHT = 780;
+const int WIDTH = 800;
+const int HEIGHT = 800;
 const int MAX_FRAMES_IN_FLIGHT = 2;
 
 const std::vector<const char*> validationLayers = {
@@ -76,6 +73,7 @@ private:
     std::vector<VkFramebuffer> swapChainFramebuffers;
     VkCommandPool commandPool;
     std::vector<VkCommandBuffer> commandBuffers;
+    VkClearValue clearColor = {1.0f, 1.0f, 1.0f, 1.0f};//{0.21176471f, 0.22352941f, 0.24313725f, 1.0f};
     std::vector<VkSemaphore> imageAvailableSemaphores;
     std::vector<VkSemaphore> renderFinishedSemaphores;
     std::vector<VkFence> inFlightFences;
@@ -123,7 +121,7 @@ private:
             VkDebugUtilsMessageTypeFlagsEXT messageType,
             const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
             void* pUserData
-            );
+    );
 };
 
 #endif //WEBRENDER_MAINWINDOW_HPP

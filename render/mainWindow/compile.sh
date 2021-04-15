@@ -1,0 +1,1 @@
+cd ../../render/mainWindow && cd fragment && glslangValidator -V baseShader.frag && cd ../vertex && glslangValidator -V baseShader.vert
